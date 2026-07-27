@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block title %}Livres — Esther{% endblock %}
+{% block body %}
+
+<section style="padding-top:56px;">
+  <div class="wrap">
+    <div class="section-head">
+      <div><p class="eyebrow">Bibliographie</p><h2 style="margin-top:12px;">Tous les livres</h2></div>
+    </div>
+    <div class="books-scroller" style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;">
+      {% for livre in livres %}
+        <div class="book">
+          <div class="book-cover">
+            {% if livre.couverture %}
+              <img src="{{ asset('uploads/livres/' ~ livre.couverture) }}" alt="" style="width:100%;height:100%;object-fit:cover;">
+            {% else %}
+              <span>{{ livre.titre }}</span>
+            {% endif %}
+          </div>
+          <h4>{{ livre.titre }}</h4>
+          <p style="font-size:0.85rem;color:var(--ink-soft);">{{ livre.description|striptags|slice(0, 90) }}…</p>
+          <a class="link-out" href="{{ livre.lienExterne }}" target="_blank" rel="noopener">Voir sur Amazon ↗</a>
+        </div>
+      {% else %}
+        <p>Aucun livre publié pour le moment.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+<section class="hero" id="accueil">
+  <svg class="rings-bg" viewBox="0 0 640 640" fill="none">
+    <circle cx="320" cy="320" r="90" stroke="#3B5D50" stroke-opacity="0.35" stroke-width="1.5"/>
+    <circle cx="320" cy="320" r="150" stroke="#3B5D50" stroke-opacity="0.28" stroke-width="1.5"/>
+    <circle cx="320" cy="320" r="215" stroke="#C9982E" stroke-opacity="0.3" stroke-width="1.5"/>
+  </svg>
+  <div class="hero-inner wrap">
+    <div>
+      <p class="eyebrow">Journal &amp; livres d'Esther</p>
+      <h1 style="margin-top:16px;">Chaque saison de vie <em>a quelque chose à nous apprendre.</em></h1>
+      <p class="lede">Esther partage ici son cheminement, ses lectures et les leçons tirées d'une vie en mouvement.</p>
+      <div class="hero-ctas">
+        <a href="#articles" class="btn btn-primary">Lire le dernier article</a>
+        <a href="{{ path('app_livre_index') }}" class="btn btn-ghost">Découvrir les livres</a>
+      </div>
+    </div>
+    <div>
+      <div class="portrait-frame"><span class="monogram">E.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="articles">
+  <div class="wrap">
+    <div class="section-head">
+      <div><p class="eyebrow">Le journal</p><h2 style="margin-top:12px;">Derniers articles</h2></div>
+      <a href="{{ path('app_journal_index') }}" class="desc">Voir tous les articles →</a>
+    </div>
+    <div class="articles-grid">
+      {% for article in articles %}
+        <article class="article-card">
+          <div class="article-thumb">
+            {% if article.imageCouverture %}
+              <img src="{{ asset('uploads/articles/' ~ article.imageCouverture) }}" alt="" style="width:100%;height:100%;object-fit:cover;">
+            {% endif %}
+            <div class="ring-mark"></div>
+          </div>
+          <div class="article-body">
+            <div class="article-meta">
+              <span>{{ article.datePublication|date('d M Y') }}</span>
+              {% if article.categorie %} · <span>{{ article.categorie.nom }}</span>{% endif %}
+            </div>
+            <h3>{{ article.titre }}</h3>
+            <p>{{ article.extrait|striptags|slice(0, 110) }}…</p>
+            <a class="read-more" href="{{ path('app_journal_show', {slug: article.slug}) }}">Lire l'article →</a>
+          </div>
+        </article>
+      {% else %}
+        <p>Aucun article publié pour le moment.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="livres">
+  <div class="books wrap">
+    <div class="wrap-inner">
+      <div class="section-head">
+        <div><p class="eyebrow" style="color:#C9982E;">Les livres</p><h2 style="margin-top:12px;">Écrits pour être vécus</h2></div>
+      </div>
+      <div class="books-scroller">
+        {% for livre in livres %}
+          <div class="book">
+            <div class="book-cover">
+              {% if livre.couverture %}
+                <img src="{{ asset('uploads/livres/' ~ livre.couverture) }}" alt="" style="width:100%;height:100%;object-fit:cover;">
+              {% else %}
+                <span>{{ livre.titre }}</span>
+              {% endif %}
+            </div>
+            <h4>{{ livre.titre }}</h4>
+            <a class="link-out" href="{{ livre.lienExterne }}" target="_blank" rel="noopener">Voir sur Amazon ↗</a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

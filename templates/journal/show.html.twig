@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ article.titre }} — Esther{% endblock %}
+{% block body %}
+
+<section style="padding-top:56px;">
+  <div class="wrap" style="max-width:760px;">
+    <div class="article-meta" style="margin-bottom:18px;">
+      <span>{{ article.datePublication|date('d M Y') }}</span>
+      {% if article.categorie %} · <span>{{ article.categorie.nom }}</span>{% endif %}
+    </div>
+    <h1 style="font-size:clamp(1.8rem,5vw,2.6rem);line-height:1.15;margin-bottom:24px;">{{ article.titre }}</h1>
+
+    {% if article.imageCouverture %}
+      <img src="{{ asset('uploads/articles/' ~ article.imageCouverture) }}" alt=""
+           style="width:100%;border-radius:2px;margin-bottom:32px;">
+    {% endif %}
+
+    <div style="font-size:1.02rem;line-height:1.8;color:var(--ink);">
+      {{ article.contenu|raw }}
+    </div>
+
+    <a href="{{ path('app_journal_index') }}" class="btn btn-ghost" style="margin-top:40px;display:inline-flex;">← Retour au journal</a>
+  </div>
+</section>
+
+{% if suggestions|length > 0 %}
+<section>
+  <div class="wrap">
+    <div class="section-head"><h2>À lire aussi</h2></div>
+    <div class="articles-grid">
+      {% for a in suggestions %}
+        <article class="article-card">
+          <div class="article-thumb"><div class="ring-mark"></div></div>
+          <div class="article-body">
+            <div class="article-meta"><span>{{ a.datePublication|date('d M Y') }}</span></div>
+            <h3>{{ a.titre }}</h3>
+            <p>{{ a.extrait|striptags|slice(0, 110) }}…</p>
+            <a class="read-more" href="{{ path('app_journal_show', {slug: a.slug}) }}">Lire l'article →</a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% endblock %}

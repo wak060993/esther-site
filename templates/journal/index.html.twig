@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<section style="padding-top:56px;">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Journal</h2>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;">
+      <a href="{{ path('app_journal_index') }}" class="btn btn-ghost" style="padding:8px 16px;font-size:0.8rem;">Tout</a>
+      {% for cat in categories %}
+        <a href="{{ path('app_journal_index', {categorie: cat.slug}) }}" class="btn btn-ghost" style="padding:8px 16px;font-size:0.8rem;">{{ cat.nom }}</a>
+      {% endfor %}
+    </div>
+
+    <div class="articles-grid">
+      {% for article in pagination %}
+        <article class="article-card">
+          <div class="article-thumb"><div class="ring-mark"></div></div>
+          <div class="article-body">
+            <div class="article-meta"><span>{{ article.datePublication|date('d M Y') }}</span></div>
+            <h3>{{ article.titre }}</h3>
+            <p>{{ article.extrait|striptags|slice(0, 110) }}…</p>
+            <a class="read-more" href="{{ path('app_journal_show', {slug: article.slug}) }}">Lire l'article →</a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+    <div style="margin-top:40px;">
+      {{ knp_pagination_render(pagination) }}
+    </div>
+  </div>
+</section>
+{% endblock %}
