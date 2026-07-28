@@ -455,10 +455,6 @@
   // Reveal au scroll (fade + translate), respecte prefers-reduced-motion
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!prefersReduced && 'IntersectionObserver' in window) {
-    // Double requestAnimationFrame : garantit que le navigateur a bien peint
-    // l'état initial (opacity:0) avant qu'on commence à observer, sinon les
-    // éléments déjà visibles à l'écran sautent directement à l'état final
-    // sans jouer la transition.
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         const revealObserver = new IntersectionObserver((entries) => {
@@ -475,6 +471,28 @@
     });
   } else {
     document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+  }
+
+  // Inscription newsletter en AJAX (empêche le rechargement de page / GET dans l'URL)
+  const newsletterForm = document.getElementById('newsletterForm');
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = e.target.email.value;
+      try {
+        const res = await fetch("{{ path('app_newsletter_inscription') }}", {
+          method: 'POST',
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          body: 'email=' + encodeURIComponent(email)
+        });
+        const data = await res.json();
+        const msgEl = document.getElementById('newsletterMsg');
+        msgEl.textContent = data.message;
+        if (data.success) e.target.reset();
+      } catch (err) {
+        document.getElementById('newsletterMsg').textContent = "Une erreur est survenue, réessaie plus tard.";
+      }
+    });
   }
 </script>
 
