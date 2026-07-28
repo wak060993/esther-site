@@ -40,6 +40,9 @@ RUN composer install --no-dev --optimize-autoloader --no-scripts
 # Installe les assets JS (Stimulus, etc.) requis par AssetMapper/EasyAdmin
 RUN php bin/console importmap:install --env=prod
 
+# Compile les assets CSS/JS pour la production
+RUN php bin/console asset-map:compile --env=prod
+
 # Crée les dossiers nécessaires et les bons droits
 RUN mkdir -p var/cache var/log public/uploads/articles public/uploads/livres \
     && chown -R www-data:www-data var public/uploads \
