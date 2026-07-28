@@ -43,6 +43,9 @@ RUN php bin/console importmap:install --env=prod
 # Compile les assets CSS/JS pour la production
 RUN php bin/console asset-map:compile --env=prod
 
+# Publie les assets des bundles (CSS/JS d'EasyAdmin notamment)
+RUN php bin/console assets:install public --env=prod
+
 # Crée les dossiers nécessaires et les bons droits
 RUN mkdir -p var/cache var/log public/uploads/articles public/uploads/livres \
     && chown -R www-data:www-data var public/uploads \
