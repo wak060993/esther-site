@@ -2,11 +2,11 @@
 {% block body %}
 
 <section class="hero" id="accueil">
-  <svg class="rings-bg" viewBox="0 0 640 640" fill="none">
-    <circle cx="320" cy="320" r="90" stroke="#3B5D50" stroke-opacity="0.35" stroke-width="1.5"/>
-    <circle cx="320" cy="320" r="150" stroke="#3B5D50" stroke-opacity="0.28" stroke-width="1.5"/>
-    <circle cx="320" cy="320" r="215" stroke="#C9982E" stroke-opacity="0.3" stroke-width="1.5"/>
-  </svg>
+ <svg class="rings-bg" viewBox="0 0 640 640" fill="none">
+  <circle cx="320" cy="320" r="90" stroke="#3B5D50" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="180 90"/>
+  <circle cx="320" cy="320" r="150" stroke="#3B5D50" stroke-opacity="0.28" stroke-width="1.5" stroke-dasharray="260 120"/>
+  <circle cx="320" cy="320" r="215" stroke="#C9982E" stroke-opacity="0.3" stroke-width="1.5" stroke-dasharray="340 160"/>
+</svg>
   <div class="hero-inner wrap">
     <div>
       <p class="eyebrow">Journal &amp; livres d'Esther</p>
@@ -25,13 +25,13 @@
 
 <section id="articles">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div><p class="eyebrow">Le journal</p><h2 style="margin-top:12px;">Derniers articles</h2></div>
       <a href="{{ path('app_journal_index') }}" class="desc">Voir tous les articles →</a>
     </div>
     <div class="articles-grid">
       {% for article in articles %}
-        <article class="article-card">
+        <article class="article-card reveal">
           <div class="article-thumb">
             {% if article.imageCouverture %}
               <img src="{{ asset('uploads/articles/' ~ article.imageCouverture) }}" alt="" style="width:100%;height:100%;object-fit:cover;">
@@ -63,7 +63,7 @@
       </div>
       <div class="books-scroller">
         {% for livre in livres %}
-          <div class="book">
+          <div class="book reveal">
             <div class="book-cover">
               {% if livre.couverture %}
                 <img src="{{ asset('uploads/livres/' ~ livre.couverture) }}" alt="" style="width:100%;height:100%;object-fit:cover;">
@@ -75,6 +75,38 @@
             <a class="link-out" href="{{ livre.lienExterne }}" target="_blank" rel="noopener">Voir sur Amazon ↗</a>
           </div>
         {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pilliers">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <p class="eyebrow">Ce qui guide Esther</p>
+        <h2 style="margin-top:12px;">Trois repères pour avancer</h2>
+      </div>
+      <p class="desc">Les thèmes qui reviennent dans ses écrits, et qu'on retrouve tissés dans chaque article.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar reveal">
+        <div class="ring-num">01</div>
+        <h3>Se connaître</h3>
+        <p>Comprendre ses schémas, ses forces et ses zones d'ombre — le point de départ de tout changement durable.</p>
+        <a class="lien" href="#">Explorer →</a>
+      </div>
+      <div class="pillar reveal">
+        <div class="ring-num">02</div>
+        <h3>Se relever</h3>
+        <p>Les épreuves ne se contournent pas, elles se traversent. Des outils concrets pour tenir, puis repartir.</p>
+        <a class="lien" href="#">Explorer →</a>
+      </div>
+      <div class="pillar reveal">
+        <div class="ring-num">03</div>
+        <h3>Se réaliser</h3>
+        <p>Construire une vie alignée avec ce qu'on est vraiment, un choix simple à la fois.</p>
+        <a class="lien" href="#">Explorer →</a>
       </div>
     </div>
   </div>
