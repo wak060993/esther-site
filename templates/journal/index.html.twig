@@ -2,7 +2,7 @@
 {% block body %}
 <section style="padding-top:56px;">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <h2>Journal</h2>
     </div>
 
@@ -15,7 +15,7 @@
 
     <div class="articles-grid">
       {% for article in pagination %}
-        <article class="article-card">
+        <article class="article-card reveal">
           <div class="article-thumb"><div class="ring-mark"></div></div>
           <div class="article-body">
             <div class="article-meta"><span>{{ article.datePublication|date('d M Y') }}</span></div>

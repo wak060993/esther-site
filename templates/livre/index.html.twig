@@ -4,12 +4,12 @@
 
 <section style="padding-top:56px;">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div><p class="eyebrow">Bibliographie</p><h2 style="margin-top:12px;">Tous les livres</h2></div>
     </div>
     <div class="books-scroller" style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;">
       {% for livre in livres %}
-        <div class="book">
+        <div class="book reveal">
           <div class="book-cover">
             {% if livre.couverture %}
               <img src="{{ asset('uploads/livres/' ~ livre.couverture) }}" alt="" style="width:100%;height:100%;object-fit:cover;">
